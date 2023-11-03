@@ -1,0 +1,361 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CommonLibrary</name>
+    </assembly>
+    <members>
+        <member name="T:CommonLibrary.Model.Customer.ContactNumber">
+            <summary>
+            Customer Contact Number
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.ContactNumber.ContactNumberId">
+            <summary>
+            Primary Key.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.ContactNumber.CustomerId">
+            <summary>
+            Foreign key for <see cref="T:CommonLibrary.Model.Customer.Customer"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.ContactNumber.Customer">
+            <summary>
+            Reference to <see cref="T:CommonLibrary.Model.Customer.Customer"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.ContactNumber.ContactNumberTypeId">
+            <summary>
+            Foreign Key for <see cref="T:CommonLibrary.Model.Customer.ContactNumberType"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.ContactNumber.ContactNumberType">
+            <summary>
+            Reference to <see cref="T:CommonLibrary.Model.Customer.ContactNumberType"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.ContactNumber.Number">
+            <summary>
+            Customer contact Number.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.ContactNumber.IsPrimary">
+            <summary>
+            The primary contact number.
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.Model.Customer.ContactNumberType">
+            <summary>
+            Customer Contact Number Type
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.ContactNumberType.ContactNumberTypeId">
+            <summary>
+            Primary Key.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.ContactNumberType.Type">
+            <summary>
+            Type of contact number.
+            This must be unique.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.ContactNumberType.IsActive">
+            <summary>
+            Is contact number type active.
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.Model.Customer.Customer">
+            <summary>
+            Customer
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.Customer.CustomerId">
+            <summary>
+            Primary Key
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.Customer.FirstName">
+            <summary>
+            First name of customer
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.Customer.MiddleName">
+            <summary>
+            Middle name of customer
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.Customer.LastName">
+            <summary>
+            Last name of customer
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.Customer.ContactNumbers">
+            <summary>
+            Customer contact numbers
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.Customer.Addresses">
+            <summary>
+            Customer addresses
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.Model.Customer.CustomerAddress">
+            <summary>
+            Customer Address
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.CustomerAddress.FullAddress">
+            <summary>
+            Full Address of customer
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.CustomerAddress.Landmark">
+            <summary>
+            Address landmark
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.CustomerAddress.AdditionalNotes">
+            <summary>
+            Additional notes
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.CustomerAddress.CustomerId">
+            <summary>
+            Foreign key for <see cref="T:CommonLibrary.Model.Customer.Customer"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.CustomerAddress.Customer">
+            <summary>
+            Reference to <see cref="T:CommonLibrary.Model.Customer.Customer"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Customer.CustomerAddress.IsPrimary">
+            <summary>
+            The primary contact number.
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.Model.Item.Item">
+            <summary>
+            Item
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Item.Item.ItemId">
+            <summary>
+            Primary key.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Item.Item.Name">
+            <summary>
+            Item name.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Item.Item.Description">
+            <summary>
+            Item description.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Item.Item.ItemCategoryId">
+            <summary>
+            Foreign key for <see cref="T:CommonLibrary.Model.Item.ItemCategory"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Item.Item.ItemCategory">
+            <summary>
+            Reference to <see cref="T:CommonLibrary.Model.Item.ItemCategory"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Item.Item.IsActive">
+            <summary>
+            Is Item Active.
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.Model.Item.ItemCategory">
+            <summary>
+            Item Category
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Item.ItemCategory.ItemCategoryId">
+            <summary>
+            Primary key.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Item.ItemCategory.Name">
+            <summary>
+            Category name.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Item.ItemCategory.IsActive">
+            <summary>
+            Is contact number type active.
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.Model.Item.ItemPriceHistory">
+            <summary>
+            Item Price History
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Item.ItemPriceHistory.ItemPriceHistoryId">
+            <summary>
+            Primary key.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Item.ItemPriceHistory.ItemId">
+            <summary>
+            Foreign key for <see cref="T:CommonLibrary.Model.Item.Item"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Item.ItemPriceHistory.Item">
+            <summary>
+            Reference to <see cref="T:CommonLibrary.Model.Item.Item"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Item.ItemPriceHistory.Timestamp">
+            <summary>
+            Date and time when the record was added
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.Model.Order.Order">
+            <summary>
+            Order.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.Order.OrderId">
+            <summary>
+            Primary key.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.Order.OrderNumber">
+            <summary>
+            Unique order number.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.Order.CustomerId">
+            <summary>
+            Foreign key of customer who ordered.
+            Reference to <see cref="T:CommonLibrary.Model.Customer.Customer"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.Order.Customer">
+            <summary>
+            Customer who ordered.
+            Reference to <see cref="T:CommonLibrary.Model.Customer.Customer"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.Order.TotalDiscount">
+            <summary>
+            Total Discount in the order.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.Order.Total">
+            <summary>
+            The order total.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.Order.Timestamp">
+            <summary>
+            Timestamp when order was placed.
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.Model.Order.OrderContent">
+            <summary>
+            Order Content
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderContent.OrderContentId">
+            <summary>
+            Primary key.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderContent.OrderId">
+            <summary>
+            Foreign key for <see cref="T:CommonLibrary.Model.Order.Order"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderContent.Order">
+            <summary>
+            Reference to <see cref="T:CommonLibrary.Model.Order.Order"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderContent.ItemId">
+            <summary>
+            Foreign key for <see cref="T:CommonLibrary.Model.Item.Item"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderContent.Item">
+            <summary>
+            Reference to <see cref="T:CommonLibrary.Model.Item.Item"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderContent.Quantity">
+            <summary>
+            Quantity for order.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderContent.Price">
+            <summary>
+            Item price for the order
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.Model.Order.OrderPayment">
+            <summary>
+            Order payment.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderPayment.OrderPaymentId">
+            <summary>
+            Primary key.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderPayment.OrderPaymentMethodId">
+            <summary>
+            Reference to <see cref="T:CommonLibrary.Model.Order.OrderPaymentMethod"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderPayment.OrderPaymentMethod">
+            <summary>
+            Foreign Key for <see cref="T:CommonLibrary.Model.Order.OrderPaymentMethod"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderPayment.OrderId">
+            <summary>
+            Reference to <see cref="T:CommonLibrary.Model.Order.Order"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderPayment.Order">
+            <summary>
+            Reference to <see cref="T:CommonLibrary.Model.Order.Order"/>.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderPayment.Amount">
+            <summary>
+            Payment amount.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderPayment.ReferenceNumber">
+            <summary>
+            Payment reference number.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderPayment.Timestamp">
+            <summary>
+            Timestamp when payment was recorded.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderPaymentMethod.OrderPaymentMethodId">
+            <summary>
+            Primary key.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderPaymentMethod.PaymentMethod">
+            <summary>
+            Payment method.
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.Model.Order.OrderPaymentMethod.IsActive">
+            <summary>
+            Is Payment method still active.
+            </summary>
+        </member>
+    </members>
+</doc>
