@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLibrary", "CommonLibr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS API", "POS API\POS API.csproj", "{054E3F84-0E71-41AD-AF0E-63381C0FCB28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS Web", "POS Web\POS Web.csproj", "{668608D4-2BC4-47AB-A799-CE3429BA514A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{054E3F84-0E71-41AD-AF0E-63381C0FCB28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{054E3F84-0E71-41AD-AF0E-63381C0FCB28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{054E3F84-0E71-41AD-AF0E-63381C0FCB28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{668608D4-2BC4-47AB-A799-CE3429BA514A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{668608D4-2BC4-47AB-A799-CE3429BA514A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{668608D4-2BC4-47AB-A799-CE3429BA514A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{668608D4-2BC4-47AB-A799-CE3429BA514A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
