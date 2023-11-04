@@ -79,7 +79,8 @@ namespace POS_API.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsSystemRequired = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -271,11 +272,12 @@ namespace POS_API.Migrations
 
             migrationBuilder.InsertData(
                 table: "OrderStatuses",
-                columns: new[] { "OrderStatusId", "Description", "IsActive", "Name" },
+                columns: new[] { "OrderStatusId", "Description", "IsActive", "IsSystemRequired", "Name" },
                 values: new object[,]
                 {
-                    { 1, "", false, "New" },
-                    { 2, "", false, "Complete" }
+                    { 1, "", false, true, "New" },
+                    { 2, "", false, true, "Pending Payment" },
+                    { 3, "", false, true, "Complete" }
                 });
 
             migrationBuilder.CreateIndex(

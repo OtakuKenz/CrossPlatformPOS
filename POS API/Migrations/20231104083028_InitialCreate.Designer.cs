@@ -11,7 +11,7 @@ using POS_API.Models;
 namespace POS_API.Migrations
 {
     [DbContext(typeof(POSContext))]
-    [Migration("20231103143933_InitialCreate")]
+    [Migration("20231104083028_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -344,6 +344,9 @@ namespace POS_API.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsSystemRequired")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -359,6 +362,7 @@ namespace POS_API.Migrations
                             OrderStatusId = 1,
                             Description = "",
                             IsActive = false,
+                            IsSystemRequired = true,
                             Name = "New"
                         },
                         new
@@ -366,6 +370,15 @@ namespace POS_API.Migrations
                             OrderStatusId = 2,
                             Description = "",
                             IsActive = false,
+                            IsSystemRequired = true,
+                            Name = "Pending Payment"
+                        },
+                        new
+                        {
+                            OrderStatusId = 3,
+                            Description = "",
+                            IsActive = false,
+                            IsSystemRequired = true,
                             Name = "Complete"
                         });
                 });

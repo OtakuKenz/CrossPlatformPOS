@@ -34,8 +34,8 @@ public class POSContext : DbContext
     {
         modelBuilder.Entity<OrderStatus>().HasData(
             new OrderStatus() { OrderStatusId = 1, Name = "New", IsSystemRequired = true },
-            new OrderStatus() { OrderStatusId = 1, Name = "Pending Payment", IsSystemRequired = true },
-            new OrderStatus() { OrderStatusId = 2, Name = "Complete", IsSystemRequired = true }
+            new OrderStatus() { OrderStatusId = 2, Name = "Pending Payment", IsSystemRequired = true },
+            new OrderStatus() { OrderStatusId = 3, Name = "Complete", IsSystemRequired = true }
         );
     }
 }
