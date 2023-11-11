@@ -1,3 +1,55 @@
-﻿@page "/item"
+﻿@page "/items/add"
+@using POS_Web.Components.Shared
 
-<h3>Item</h3>
+<div class="container">
+    <div class="vstack gap-3">
+        <h3>Add Item</h3>
+        <NavigationLink Href="items/category/add" DisplayValue="Add Category" />
+
+        <EditForm Model="ItemModel" OnValidSubmit="@OnValidFormSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="vstack gap-3">
+                <div>
+                    <label>
+                        Name:
+                        <InputText class="form-control" @bind-Value="ItemModel.Name" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Description:
+                        <InputTextArea class="form-control" @bind-Value="ItemModel.Description" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Price:
+                        <InputNumber class="form-control" @bind-Value="ItemModel.Price" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Status:
+                        @if (ItemCategoryList is null)
+                        {
+                            <p>Loading</p>
+                        }
+                        else
+                        {
+                            <InputSelect class="form-select" aria-label="Select status"
+                                @bind-Value="ItemModel.ItemCategoryId">
+                                <option value="" selected disabled hidden>Select Status</option>
+                                @foreach (CommonLibrary.Model.Item.ItemCategory itemCategory in ItemCategoryList)
+                                {
+                                    <option value="@itemCategory.ItemCategoryId">@itemCategory.Name</option>
+                                }
+                            </InputSelect>
+                        }
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </EditForm>
+    </div>
+</div>

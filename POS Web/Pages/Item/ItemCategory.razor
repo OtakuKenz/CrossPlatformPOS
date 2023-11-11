@@ -1,0 +1,21 @@
+﻿@page "/items/category/add"
+
+<div class="container">
+    <div class="vstack">
+        <h3>Add Item Category</h3>
+
+        <EditForm Model="ItemCategoryModel" OnValidSubmit="@OnValidFormSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="vstack gap-3">
+                <div>
+                    <label>
+                        Name:
+                        <InputText class="form-control" @bind-Value="ItemCategoryModel.Name" />
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </EditForm>
+    </div>
+</div>

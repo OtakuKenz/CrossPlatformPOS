@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using POS_API.Models;
+using CommonLibrary.APIRoutes.Item;
 
-namespace POS_API;
+namespace POS_API.Controllers.Item;
 
-[Route("api/[controller]")]
+[Route(ItemCategoryRoute.ControllerRoute)]
 [ApiController]
 public class ItemCategoryController : ControllerBase
 {
@@ -14,7 +15,7 @@ public class ItemCategoryController : ControllerBase
         _context = context;
     }
 
-    [HttpGet]
+    [HttpGet(ItemCategoryRoute.GetItemCategories)]
     public async Task<ActionResult<List<CommonLibrary.Model.Item.ItemCategory>>> GetItemCategories()
     {
         if (_context.ItemCategories == null)
@@ -25,7 +26,7 @@ public class ItemCategoryController : ControllerBase
         return await _context.ItemCategories.Where(e => e.IsActive).ToListAsync();
     }
 
-    [HttpGet("{id}")]
+    [HttpGet(ItemCategoryRoute.GetItemCategory)]
     public async Task<ActionResult<CommonLibrary.Model.Item.ItemCategory>> GetItemCategory(int id)
     {
         if (_context.Customers == null)
@@ -44,7 +45,7 @@ public class ItemCategoryController : ControllerBase
         return itemCategory;
     }
 
-    [HttpPost()]
+    [HttpPost(ItemCategoryRoute.CreateItemCategory)]
     public async Task<IActionResult> CreateItem(CommonLibrary.Model.Item.ItemCategory itemCategory)
     {
         if (_context.ItemCategories == null)
@@ -52,12 +53,33 @@ public class ItemCategoryController : ControllerBase
             return Problem("Entity Customer does not exist");
         }
 
-        await _context.ItemCategories.AddAsync(itemCategory);
+        CommonLibrary.Model.Item.ItemCategory? itemFromDb = await _context.ItemCategories.FirstOrDefaultAsync(e => e.Name == itemCategory.Name);
+
+        if (itemFromDb != null)
+        {
+            if (itemFromDb.IsActive)
+            {
+                //item already exist
+                return BadRequest(error: $"{itemCategory.Name} already Exist.");
+            }
+            else
+            {
+                itemFromDb.IsActive = true;
+            }
+        }
+        else
+        {
+            await _context.ItemCategories.AddAsync(itemCategory);
+        }
+
+        itemCategory.IsActive = true;
+
         await _context.SaveChangesAsync();
-        return CreatedAtAction("Customer", new { id = itemCategory.ItemCategoryId }, itemCategory);
+        return Ok();
+        // return CreatedAtAction(ItemCategoryRoute.GetItemCategory, new { id = itemCategory.ItemCategoryId });
     }
 
-    [HttpPut("{id}")]
+    [HttpPut(ItemCategoryRoute.UpdateItemCategory)]
     public async Task<IActionResult> UpdateItemCategory(int id, CommonLibrary.Model.Item.ItemCategory item)
     {
         if (id != item.ItemCategoryId)
@@ -86,7 +108,7 @@ public class ItemCategoryController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete(ItemCategoryRoute.DeleteItemCategory)]
     public async Task<IActionResult> DeleteItemCategory(int id)
     {
         if (_context.ItemCategories == null)

@@ -17,22 +17,12 @@ public class ContactAddress : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<CommonLibrary.Model.Customer.CustomerAddress>>> GetCustomersAddresses()
     {
-        if (_context.CustomerAddresses == null)
-        {
-            return NotFound();
-        }
-
         return await _context.CustomerAddresses.Where(e => e.IsActive).ToListAsync();
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<CommonLibrary.Model.Customer.CustomerAddress>> GetCustomerAddress(int id)
     {
-        if (_context.Customers == null)
-        {
-            return NotFound();
-        }
-
         CommonLibrary.Model.Customer.CustomerAddress? reference = await _context.CustomerAddresses
         .FirstOrDefaultAsync(e => e.CustomerId == id);
 
@@ -47,11 +37,6 @@ public class ContactAddress : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateCustomer(CommonLibrary.Model.Customer.CustomerAddress customerAddress)
     {
-        if (_context.Customers == null)
-        {
-            return Problem("Entity Customer does not exist");
-        }
-
         await _context.CustomerAddresses.AddAsync(customerAddress);
         await _context.SaveChangesAsync();
         return CreatedAtAction("GetCustomerAddress", new { id = customerAddress.CustomerAddressId }, customerAddress);
@@ -74,7 +59,7 @@ public class ContactAddress : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!CustomerAddress(id))
+            if (!CustomerAddressExist(id))
             {
                 return NotFound();
             }
@@ -108,7 +93,7 @@ public class ContactAddress : ControllerBase
         return NoContent();
     }
 
-    private bool CustomerAddress(int id)
+    private bool CustomerAddressExist(int id)
     {
         return (_context.CustomerAddresses?.Any(e => e.CustomerAddressId == id)).GetValueOrDefault();
     }

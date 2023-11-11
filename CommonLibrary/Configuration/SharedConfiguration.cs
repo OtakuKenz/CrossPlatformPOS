@@ -2,7 +2,7 @@
 
 public static class SharedConfiguration
 {
-    public const string API = "http://localhost:5132/api";
+    public const string APIBase = "http://localhost:5002";
 
-    public const string WebApp = "http://localhost:5063";
+    public const string WebApp = "http://localhost:5070";
 }

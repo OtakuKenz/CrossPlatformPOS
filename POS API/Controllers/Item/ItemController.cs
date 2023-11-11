@@ -1,13 +1,11 @@
-﻿using System.Net;
-using CommonLibrary.Model.Item;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Common;
 using POS_API.Models;
+using CommonLibrary.APIRoutes.Item;
 
-namespace POS_API;
+namespace POS_API.Controllers.Item;
 
-[Route("api/[controller]")]
+[Route(ItemRoute.ControllerRoute)]
 [ApiController]
 public class ItemController : ControllerBase
 {
@@ -17,27 +15,17 @@ public class ItemController : ControllerBase
         _context = context;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<List<Item>>> GetItems()
+    [HttpGet(ItemRoute.GetItems)]
+    public async Task<ActionResult<List<CommonLibrary.Model.Item.Item>>> GetItems()
     {
-        if (_context.Items == null)
-        {
-            return NotFound();
-        }
-
         return await _context.Items.Where(e => e.IsActive).ToListAsync();
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Item>> GetItem(int id)
+    [HttpGet(ItemRoute.GetItem)]
+    public async Task<ActionResult<CommonLibrary.Model.Item.Item>> GetItem(int id, bool includeDeleted = false)
     {
-        if (_context.Customers == null)
-        {
-            return NotFound();
-        }
-
-        Item? item = await _context.Items
-        .FirstOrDefaultAsync(e => e.ItemId == id);
+        CommonLibrary.Model.Item.Item? item = await _context.Items
+        .FirstOrDefaultAsync(e => e.ItemId == id && e.IsActive != includeDeleted);
 
         if (item == null)
         {
@@ -47,36 +35,31 @@ public class ItemController : ControllerBase
         return item;
     }
 
-    [HttpPost()]
-    public async Task<IActionResult> CreateItem(Item item)
+    [HttpPost(ItemRoute.CreateItem)]
+    public async Task<IActionResult> CreateItem(CommonLibrary.Model.Item.Item item)
     {
-        if (_context.Items == null)
-        {
-            return Problem("Entity Customer does not exist");
-        }
-
+        Console.WriteLine("Entered");
         await _context.Items.AddAsync(item);
+        item.IsActive = true;
+        Console.WriteLine("Saving Item");
         await _context.SaveChangesAsync();
-        ItemPriceHistory priceHistory = new()
+        Console.WriteLine("Saved Item");
+        CommonLibrary.Model.Item.ItemPriceHistory priceHistory = new()
         {
             Price = item.Price,
             Timestamp = DateTime.Now,
             ItemId = item.ItemId
         };
+        Console.WriteLine("Created Price");
         await _context.ItemPriceHistories.AddAsync(priceHistory);
         await _context.SaveChangesAsync();
         return CreatedAtAction("Item", new { id = item.ItemId }, item);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateItem(int id, Item item)
+    [HttpPut(ItemRoute.UpdateItem)]
+    public async Task<IActionResult> UpdateItem(CommonLibrary.Model.Item.Item item)
     {
-        if (id != item.ItemId)
-        {
-            return BadRequest();
-        }
-
-        Item? dbItem = await _context.Items.FirstOrDefaultAsync(e => e.ItemId == id);
+        CommonLibrary.Model.Item.Item? dbItem = await _context.Items.FirstOrDefaultAsync(e => e.ItemId == item.ItemId);
 
         if (dbItem == null)
         {
@@ -89,7 +72,7 @@ public class ItemController : ControllerBase
 
         if (dbItem.Price != item.Price)
         {
-            ItemPriceHistory itemPriceHistory = new()
+            CommonLibrary.Model.Item.ItemPriceHistory itemPriceHistory = new()
             {
                 ItemId = item.ItemId,
                 Price = item.Price,
@@ -102,14 +85,14 @@ public class ItemController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete(ItemRoute.DeleteItem)]
     public async Task<IActionResult> DeleteItem(int id)
     {
         if (_context.Items == null)
         {
             return NotFound();
         }
-        Item? item = await _context.Items.FindAsync(id);
+        CommonLibrary.Model.Item.Item? item = await _context.Items.FindAsync(id);
         if (item == null)
         {
             return NotFound();

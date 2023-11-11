@@ -30,12 +30,13 @@ public class Item
     /// <summary>
     /// Foreign key for <see cref="Model.Item.ItemCategory"/>.
     /// </summary>
+    [Required(ErrorMessage = "Item Category is required.")]
     public int ItemCategoryId { get; set; }
 
     /// <summary>
     /// Reference to <see cref="Model.Item.ItemCategory"/>.
     /// </summary>
-    public ItemCategory ItemCategory { get; set; } = new();
+    public virtual ItemCategory ItemCategory { get; set; } = new();
 
     /// <summary>
     /// Is Item Active.

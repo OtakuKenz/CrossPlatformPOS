@@ -19,6 +19,7 @@ public class ItemCategory
     /// <summary>
     /// Category name.
     /// </summary>
+    [Required]
     [MaxLength(length: 50, ErrorMessage = "Item category name should not exceed 50 characters.")]
     public string Name { get; set; } = string.Empty;
 
