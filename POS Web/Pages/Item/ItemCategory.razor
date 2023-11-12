@@ -1,21 +1,27 @@
-﻿@page "/items/category/add"
-
-<div class="container">
-    <div class="vstack">
-        <h3>Add Item Category</h3>
-
-        <EditForm Model="ItemCategoryModel" OnValidSubmit="@OnValidFormSubmit">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div class="vstack gap-3">
+﻿<Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">
+    <Icon Name="IconName.Plus"></Icon>Add Item Category
+</Button>
+<EditForm Model="ItemCategoryModel" OnValidSubmit="@OnValidFormSubmit">
+    <Modal @ref="modal" Title="Add Item Category" UseStaticBackdrop="true" ShowCloseButton="false"
+        ModalType="ModalType.Primary">
+        <BodyTemplate>
+            <div class="vstack">
                 <div>
-                    <label>
-                        Name:
-                        <InputText class="form-control" @bind-Value="ItemCategoryModel.Name" />
-                    </label>
+                    <DataAnnotationsValidator />
+                    <div class="vstack">
+                        <div>
+                            <label class="form-label" for="name">Category Name</label>
+                            <InputText class="form-control" id="name" @bind-Value="ItemCategoryModel.Name" />
+                            <ValidationMessage For="@(() => ItemCategoryModel.Name)" />
+                        </div>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Add</button>
             </div>
-        </EditForm>
-    </div>
-</div>
+        </BodyTemplate>
+        <FooterTemplate>
+            <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick" Disabled="IsSaving">Close</Button>
+            <Button Type="ButtonType.Submit" Color="ButtonColor.Primary" Loading="IsSaving" Disabled="IsSaving"
+                LoadingText="Saving...">Add</Button>
+        </FooterTemplate>
+    </Modal>
+</EditForm>
