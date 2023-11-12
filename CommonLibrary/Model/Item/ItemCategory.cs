@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,7 @@ public class ItemCategory
     /// <summary>
     /// Category name.
     /// </summary>
-    [Required]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Item Category name is required")]
     [MaxLength(length: 50, ErrorMessage = "Item category name should not exceed 50 characters.")]
     public string Name { get; set; } = string.Empty;
 
