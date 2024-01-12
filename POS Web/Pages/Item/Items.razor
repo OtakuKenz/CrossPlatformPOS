@@ -1,37 +1,40 @@
 ﻿@page "/items"
 @using POS_Web.Components.Shared
 
-<div class="container">
-    <div class="vstack w100">
-        <h3>Item</h3>
-        <NavigationLink Href="items/add" DisplayValue="Add Item" />
-        @if (ListOfItems is null)
-        {
-            <p><em>Loading...</em></p>
-        }
-        else
-        {
-            <div class="table-responsive" style="height: 200px;">
-                <table class="table">
-                    <thead>
+<div class="vstack h-100">
+    <h3>Item</h3>
+    <NavigationLink Href="items/add" DisplayValue="Add Item" />
+    @if (ListOfItems is null)
+    {
+        <PlaceholderContainer Animation="PlaceholderAnimation.Glow">
+            <Placeholder Width="PlaceholderWidth.Col7" />
+            <Placeholder Width="PlaceholderWidth.Col9" />
+            <Placeholder Width="PlaceholderWidth.Col6" />
+            <Placeholder Width="PlaceholderWidth.Col7" />
+        </PlaceholderContainer>
+    }
+    else
+    {
+        <div class="table-responsive h-100">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <Virtualize Items="@ListOfItems" Context="item">
                         <tr>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Category</th>
-                            <th></th>
+                            <td>@item.Name</td>
+                            <td>@item.Price</td>
+                            <td>@item.ItemCategory.Name</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <Virtualize Items="@ListOfItems" Context="item">
-                            <tr>
-                                <td>@item.Name</td>
-                                <td>@item.Price</td>
-                                <td>@item.ItemCategory.Name</td>
-                            </tr>
-                        </Virtualize>
-                    </tbody>
-                </table>
-            </div>
-        }
-    </div>
+                    </Virtualize>
+                </tbody>
+            </table>
+        </div>
+    }
 </div>

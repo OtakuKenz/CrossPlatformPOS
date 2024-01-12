@@ -2,7 +2,7 @@
     <Icon Name="IconName.Plus"></Icon>Add Item Category
 </Button>
 <EditForm Model="ItemCategoryModel" OnValidSubmit="@OnValidFormSubmit">
-    <Modal @ref="modal" Title="Add Item Category" UseStaticBackdrop="true" ShowCloseButton="false"
+    <Modal @ref="Modal" Title="Add Item Category" UseStaticBackdrop="true" ShowCloseButton="false"
         ModalType="ModalType.Primary">
         <BodyTemplate>
             <div class="vstack">

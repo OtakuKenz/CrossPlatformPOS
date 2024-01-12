@@ -20,46 +20,46 @@ public partial class ItemCategory : ComponentBase
 
     private EditContext ItemCategoryEditContext = default!;
 
+    [Parameter]
+    public EventCallback ItemCategorySaved { get; set; }
+
     protected override void OnInitialized()
     {
         ItemCategoryEditContext = new(ItemCategoryModel);
     }
 
 
-    private async void OnValidFormSubmit()
+    protected async void OnValidFormSubmit()
     {
-        if (!IsSaving)
+        if (!IsSaving && ItemCategoryEditContext.Validate())
         {
-            if (ItemCategoryEditContext.Validate())
+            IsSaving = true;
+            StateHasChanged();
+            var result = await HttpClient.PostAsJsonAsync(ItemCategoryRoute.CreateItemCategory_FullPath, ItemCategoryModel);
+            if (result.IsSuccessStatusCode)
             {
-                IsSaving = true;
-                StateHasChanged();
-                var result = await HttpClient.PostAsJsonAsync(ItemCategoryRoute.CreateItemCategory_FullPath, ItemCategoryModel);
-                if (result.IsSuccessStatusCode)
-                {
-                    ToastService.Notify(new(ToastType.Success, title: "Success", message: $"Item Category: {ItemCategoryModel.Name} saved."));
-                    ItemCategoryModel = new();
-                }
-                else
-                {
-                    ToastService.Notify(new(ToastType.Warning, title: "Error", message: $"{await result.Content.ReadAsStringAsync()}"));
-                }
-                IsSaving = false;
-                StateHasChanged();
+                ToastService.Notify(new(ToastType.Success, title: "Success", message: $"Item Category: {ItemCategoryModel.Name} saved."));
+                ItemCategoryModel = new();
+                await ItemCategorySaved.InvokeAsync();
             }
+            else
+            {
+                ToastService.Notify(new(ToastType.Warning, title: "Error", message: $"{await result.Content.ReadAsStringAsync()}"));
+            }
+            IsSaving = false;
+            StateHasChanged();
         }
     }
 
-    private Modal modal = default!;
+    protected Modal Modal { get; set; } = default!;
 
-    private async Task OnShowModalClick()
+    protected async Task OnShowModalClick()
     {
-        await modal.ShowAsync();
+        await Modal.ShowAsync();
     }
 
-    private async Task OnHideModalClick()
+    protected async Task OnHideModalClick()
     {
-        ItemCategoryModel = new();
-        await modal.HideAsync();
+        await Modal.HideAsync();
     }
 }

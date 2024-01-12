@@ -31,6 +31,7 @@ public class Item
     /// Foreign key for <see cref="Model.Item.ItemCategory"/>.
     /// </summary>
     [Required(ErrorMessage = "Item Category is required.")]
+    [Range(1, int.MaxValue, ErrorMessage = "Item Category is required.")]
     public int ItemCategoryId { get; set; }
 
     /// <summary>

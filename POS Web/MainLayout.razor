@@ -5,12 +5,10 @@
     <Sidebar @ref="sidebar" IconName="IconName.BootstrapFill" Title="Blazor Bootstrap"
         DataProvider="SidebarDataProvider" />
 
-    <main>
-        <article class="px-4 pt-4">
-            @Body
-        </article>
+    <main class="px-4 pt-4 vh-100">
+        @Body
     </main>
 </div>
 
 <Toasts class="p-3" AutoHide="true" Delay="10000" Placement="ToastsPlacement.BottomRight" />
-<Preload />
+<Preload LoadingText="Loading..." />

@@ -3,6 +3,7 @@
     margin-left: 0.25rem !important;
 }
 
-.form-control.invalid {
-    border-color: #dc3545;
+.form-control.invalid,
+.form-select.invalid {
+    border-color: #dc3545 !important;
 }
