@@ -4,51 +4,64 @@
 <div class="container">
     <div class="vstack gap-3">
         <h3>Add Item</h3>
-        <NavigationLink Href="items/category/add" DisplayValue="Add Category" />
-
-        <EditForm Model="ItemModel" OnValidSubmit="@OnValidFormSubmit">
+        <div style="width: 20em;">
+            <ItemCategory ItemCategorySaved="@LoadItemCategories"></ItemCategory>
+        </div>
+        <EditForm Model="ItemModel" class="needs-validation" OnValidSubmit="@OnValidFormSubmit">
             <DataAnnotationsValidator />
-            <ValidationSummary />
             <div class="vstack gap-3">
                 <div>
-                    <label>
-                        Name:
+                    <label class="w-100">
+                        Name
                         <InputText class="form-control" @bind-Value="ItemModel.Name" />
+                        <ValidationMessage For="@(() => ItemModel.Name)" />
                     </label>
                 </div>
                 <div>
-                    <label>
-                        Description:
-                        <InputTextArea class="form-control" @bind-Value="ItemModel.Description" />
+                    <label class="w-100">Description
+                        <InputTextArea class="form-control text-wrap" @bind-Value="ItemModel.Description" />
+                        <ValidationMessage For="@(() => ItemModel.Description)" />
                     </label>
                 </div>
                 <div>
-                    <label>
+                    <label class="w-100">
                         Price:
-                        <InputNumber class="form-control" @bind-Value="ItemModel.Price" />
+                        <CurrencyInput TValue="decimal" @bind-Value="ItemModel.Price" Locale="en-PH"
+                            Placeholder="Enter amount" />
+                        <ValidationMessage For="@(() => ItemModel.Price)" />
                     </label>
                 </div>
                 <div>
-                    <label>
-                        Status:
-                        @if (ItemCategoryList is null)
+
+                    <label class="w-100">
+                        Category:
+                        @if (IsLoading)
                         {
-                            <p>Loading</p>
+                            <div>
+                                <PlaceholderContainer Animation="PlaceholderAnimation.Glow">
+                                    <Placeholder Width="PlaceholderWidth.Col7" />
+                                </PlaceholderContainer>
+                            </div>
                         }
                         else
                         {
                             <InputSelect class="form-select" aria-label="Select status"
                                 @bind-Value="ItemModel.ItemCategoryId">
                                 <option value="" selected disabled hidden>Select Status</option>
-                                @foreach (CommonLibrary.Model.Item.ItemCategory itemCategory in ItemCategoryList)
+                                @foreach (CommonLibrary.Model.Item.ItemCategory itemCategory in ItemCategoryList!)
                                 {
                                     <option value="@itemCategory.ItemCategoryId">@itemCategory.Name</option>
                                 }
                             </InputSelect>
+                            <ValidationMessage For="@(() => ItemModel.ItemCategoryId)" />
                         }
                     </label>
                 </div>
-                <button type="submit" class="btn btn-primary">Add</button>
+                @if (!IsLoading)
+                {
+                    <Button Type="ButtonType.Submit" Color="ButtonColor.Primary" Loading="IsSaving" Disabled="IsSaving"
+                        LoadingText="Saving...">Add</Button>
+                }
             </div>
         </EditForm>
     </div>

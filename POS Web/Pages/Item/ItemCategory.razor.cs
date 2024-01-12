@@ -1,34 +1,65 @@
 ﻿using System.Net.Http.Json;
+using BlazorBootstrap;
 using CommonLibrary.APIRoutes.Item;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace POS_Web.Pages.Item;
 
-public partial class ItemCategory
+public partial class ItemCategory : ComponentBase
 {
     [Inject]
-    public HttpClient HttpClient { get; set; } = null!;
+    private HttpClient HttpClient { get; set; } = null!;
 
-    public CommonLibrary.Model.Item.ItemCategory ItemCategoryModel { get; set; } = new();
+    [Inject]
+    private ToastService ToastService { get; set; } = null!;
 
-    public async void OnValidFormSubmit()
+    private CommonLibrary.Model.Item.ItemCategory ItemCategoryModel { get; set; } = new();
+
+    private bool IsSaving = false;
+
+    private EditContext ItemCategoryEditContext = default!;
+
+    [Parameter]
+    public EventCallback ItemCategorySaved { get; set; }
+
+    protected override void OnInitialized()
     {
-        try
+        ItemCategoryEditContext = new(ItemCategoryModel);
+    }
+
+
+    protected async void OnValidFormSubmit()
+    {
+        if (!IsSaving && ItemCategoryEditContext.Validate())
         {
+            IsSaving = true;
+            StateHasChanged();
             var result = await HttpClient.PostAsJsonAsync(ItemCategoryRoute.CreateItemCategory_FullPath, ItemCategoryModel);
             if (result.IsSuccessStatusCode)
             {
-                Console.WriteLine("Submitted");
+                ToastService.Notify(new(ToastType.Success, title: "Success", message: $"Item Category: {ItemCategoryModel.Name} saved."));
+                ItemCategoryModel = new();
+                await ItemCategorySaved.InvokeAsync();
             }
             else
             {
-                Console.WriteLine("Failed");
-                Console.WriteLine(result.Content.ToString());
+                ToastService.Notify(new(ToastType.Warning, title: "Error", message: $"{await result.Content.ReadAsStringAsync()}"));
             }
+            IsSaving = false;
+            StateHasChanged();
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
+    }
+
+    protected Modal Modal { get; set; } = default!;
+
+    protected async Task OnShowModalClick()
+    {
+        await Modal.ShowAsync();
+    }
+
+    protected async Task OnHideModalClick()
+    {
+        await Modal.HideAsync();
     }
 }

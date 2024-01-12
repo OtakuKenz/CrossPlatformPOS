@@ -18,7 +18,9 @@ public class ItemController : ControllerBase
     [HttpGet(ItemRoute.GetItems)]
     public async Task<ActionResult<List<CommonLibrary.Model.Item.Item>>> GetItems()
     {
-        return await _context.Items.Where(e => e.IsActive).ToListAsync();
+        return await _context.Items.Where(e => e.IsActive)
+        .Include(x => x.ItemCategory)
+        .ToListAsync();
     }
 
     [HttpGet(ItemRoute.GetItem)]
@@ -38,22 +40,21 @@ public class ItemController : ControllerBase
     [HttpPost(ItemRoute.CreateItem)]
     public async Task<IActionResult> CreateItem(CommonLibrary.Model.Item.Item item)
     {
-        Console.WriteLine("Entered");
-        await _context.Items.AddAsync(item);
         item.IsActive = true;
-        Console.WriteLine("Saving Item");
+        _context.Entry(item).State = EntityState.Added;
         await _context.SaveChangesAsync();
-        Console.WriteLine("Saved Item");
         CommonLibrary.Model.Item.ItemPriceHistory priceHistory = new()
         {
             Price = item.Price,
             Timestamp = DateTime.Now,
             ItemId = item.ItemId
         };
-        Console.WriteLine("Created Price");
-        await _context.ItemPriceHistories.AddAsync(priceHistory);
+        _context.Entry(priceHistory).State = EntityState.Added;
         await _context.SaveChangesAsync();
-        return CreatedAtAction("Item", new { id = item.ItemId }, item);
+        item.ItemPriceHistories.Clear();
+        item.ItemCategory = new();
+
+        return CreatedAtAction(nameof(CreateItem), new { id = item.ItemId }, item);
     }
 
     [HttpPut(ItemRoute.UpdateItem)]

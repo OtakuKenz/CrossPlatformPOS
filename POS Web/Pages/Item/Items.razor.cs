@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Components;
 
 namespace POS_Web.Pages.Item;
 
-public partial class Items
+public partial class Items : ComponentBase
 {
     [Inject]
-    public HttpClient HttpClient { get; set; } = null!;
+    private HttpClient HttpClient { get; set; } = null!;
 
-    public List<CommonLibrary.Model.Item.Item>? ListOfItems { get; set; }
+    protected List<CommonLibrary.Model.Item.Item>? ListOfItems { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         ListOfItems = await HttpClient.GetFromJsonAsync<List<CommonLibrary.Model.Item.Item>>(ItemRoute.GetItems_FullPath);
